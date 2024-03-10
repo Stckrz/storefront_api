@@ -15,8 +15,8 @@ router.get('/getAll/', async (req, res) => {
 });
 
 //get all sale-items of a specific category
-router.get('/getAllByCategory/', async (req, res) => {
-	const category = req.body.category;
+router.get('/getAllByCategory/:category', async (req, res) => {
+	const category = req.params.category;
 	try{
 		const data = await SaleItemModel.find( { "category": category } )
 		res.json(data)

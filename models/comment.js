@@ -16,6 +16,10 @@ const CommentSchema = new mongoose.Schema({
 		type: Date,
 		required: true,
 		default: Date.now
+	},
+	sale_item_id: {
+		type: String,
+		required: true,
 	}
 })
 
