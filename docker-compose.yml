@@ -1,0 +1,56 @@
+version: "3"
+services:
+    mongo:
+        image: mongo
+        volumes:
+          - 'data-volume:/data/db'
+        ports:
+          - "27017:27017"
+        networks:
+          - app-network
+    server:
+        build:
+            context: ./storefront_api
+            dockerfile: Dockerfile
+        image: storefront-server
+        container_name: storefront-server
+        command: ["node", "server.js"]
+        volumes:
+          - './server/:/usr/src/app'
+          - '/usr/src/app/node_modules'
+        ports:
+          - "5000:5000"
+        depends_on: 
+          - mongo
+        env_file: ./storefront_api/.env
+        environment:
+          - NODE_ENV=development
+        networks:
+          - app-network
+        restart: unless-stopped
+    client:
+        build:
+            context: ./storefront
+            dockerfile: Dockerfile
+        image: storefront-client
+        container_name: storefront-client
+        restart: unless-stopped
+        volumes:
+          - './client/:/app'
+          - '/app/node_modules'
+        depends_on:
+          - server
+        ports:
+          - "3000:3000"
+        command: ["npm", "start"]
+        networks:
+          - app-network
+networks:
+    app-network:
+        driver: bridge
+
+volumes:
+    data-volume:
+    node_modules:
+    web-root:
+        driver: local
