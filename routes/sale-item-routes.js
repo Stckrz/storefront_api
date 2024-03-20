@@ -61,6 +61,16 @@ router.delete('/delete/:id', async (req, res) => {
 	}
 })
 
+router.delete('/deleteAll', async (req, res) => {
+	try {
+		const data = await SaleItemModel.deleteMany({})
+		res.json(data)
+	}
+	catch (error) {
+		res.status(400).json({ message: error.message })
+	}
+})
+
 //post a new sale-item
 router.post('/post/', async (req, res) => {
 	const data = new SaleItemModel({

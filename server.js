@@ -34,6 +34,10 @@ const CommentsRouter = require('./routes/comment-routes');
 app.use('/comments', CommentsRouter)
 
 
+app.use('/public/images', express.static(__dirname + '/public/images'));
+// app.use('/images', express.static('images'))
+
+
 app.listen(5000, () => {
 	console.log("listening on port 5000")
 })
