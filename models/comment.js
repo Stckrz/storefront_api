@@ -7,7 +7,7 @@ const CommentSchema = new mongoose.Schema({
 	},
 	body: {
 		type: String,
-		required: true
+		required: false
 	},
 	rating: {
 		type: Number
